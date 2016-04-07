@@ -10,4 +10,7 @@ function finishCasting()
 end
 
 function applyEffects()
+	--dealMagicalDamage(getEffectValue(0)+ (0.2 * getOwner():getStats():getTotalAp()))
+	dealMagicalDamage(50)
+	destoryProjectile()
 end

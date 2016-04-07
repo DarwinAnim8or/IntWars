@@ -43,7 +43,7 @@ void Unit::update(int64 diff) {
          isAttacking = false;
          map->getGame()->notifySetTarget(this, 0);
          initialAttackDone = false;
-         
+
       } else if (isAttacking && autoAttackTarget) {
          autoAttackCurrentDelay += diff / 1000000.f;
          if (autoAttackCurrentDelay >= autoAttackDelay/stats->getAttackSpeedMultiplier()) {
@@ -57,7 +57,7 @@ void Unit::update(int64 diff) {
             autoAttackCurrentCooldown = 1.f / (stats->getTotalAttackSpeed());
             isAttacking = false;
          }
-         
+
       } else if (distanceWith(targetUnit) <= stats->getRange()) {
          refreshWaypoints();
          nextAutoIsCrit = rand() % 100 + 1 <= stats->getCritChance() * 100;
@@ -78,23 +78,23 @@ void Unit::update(int64 diff) {
             AttackType attackType = isMelee() ? ATTACK_TYPE_MELEE : ATTACK_TYPE_TARGETED;
             map->getGame()->notifyOnAttack(this, targetUnit, attackType);
          }
-         
+
       } else {
          refreshWaypoints();
       }
-      
+
    } else if (isAttacking) {
-      if (!autoAttackTarget || 
-          autoAttackTarget->isDead() || 
+      if (!autoAttackTarget ||
+          autoAttackTarget->isDead() ||
           !getMap()->teamHasVisionOn(getTeam(), autoAttackTarget)) {
          isAttacking = false;
          initialAttackDone = false;
          autoAttackTarget = 0;
       }
    }
-   
+
    Object::update(diff);
-   
+
    if (autoAttackCurrentCooldown > 0) {
       autoAttackCurrentCooldown -= diff / 1000000.f;
    }
@@ -123,7 +123,7 @@ void Unit::autoAttackHit(Unit* target) {
  */
 void Unit::dealDamageTo(Unit* target, float damage, DamageType type, DamageSource source) {
     //CORE_INFO("0x%08X deals %f damage to 0x%08X !", getNetId(), damage, target->getNetId());
-    
+
    if(unitScript.isLoaded()){
       try{
          /*damage = */ unitScript.lua.get <sol::function> ("onDealDamage").call <void> (target, damage, type, source);
@@ -131,22 +131,22 @@ void Unit::dealDamageTo(Unit* target, float damage, DamageType type, DamageSourc
          CORE_ERROR("Error callback ondealdamage: %s", e.what());
       }
    }
-    
-    
+
+
     float defense = 0;
     float regain = 0;
     switch (type) {
         case DAMAGE_TYPE_PHYSICAL:
             defense = target->getStats().getArmor();
             defense = ((1 - stats->getArmorPenPct()) * defense) - stats->getArmorPenFlat();
-            
+
             break;
         case DAMAGE_TYPE_MAGICAL:
             defense = target->getStats().getMagicArmor();
             defense = ((1 - stats->getMagicPenPct()) * defense) - stats->getMagicPenFlat();
             break;
     }
-    
+
     switch(source) {
         case DAMAGE_SOURCE_SPELL:
             regain = stats->getSpellVamp();
@@ -155,7 +155,7 @@ void Unit::dealDamageTo(Unit* target, float damage, DamageType type, DamageSourc
             regain = stats->getLifeSteal();
             break;
     }
-    
+
     //Damage dealing. (based on leagueoflegends' wikia)
     damage = defense >= 0 ? (100 / (100 + defense)) * damage : (2 - (100 / (100 - defense))) * damage;
 
@@ -165,7 +165,7 @@ void Unit::dealDamageTo(Unit* target, float damage, DamageType type, DamageSourc
         target->die(this);
     }
     map->getGame()->notifyDamageDone(this, target, damage, type);
-    
+
     //Get health from lifesteal/spellvamp
     if (regain != 0) {
         stats->setCurrentHealth(min(stats->getMaxHealth(), stats->getCurrentHealth() + (regain * damage)));
@@ -195,8 +195,8 @@ void Unit::die(Unit* killer) {
 	float exp = map->getExperienceFor(this);
 	auto champs = map->getChampionsInRange(this, EXP_RANGE, true);
 	//Cull allied champions
-	champs.erase(std::remove_if(champs.begin(), 
-								champs.end(), 
+	champs.erase(std::remove_if(champs.begin(),
+								champs.end(),
 								[this](Champion * l) { return l->getTeam() == getTeam(); }),
 				champs.end());
 	if (champs.size() > 0) {
@@ -235,12 +235,12 @@ void Unit::die(Unit* killer) {
    }
 }
 
-void Unit::setTargetUnit(Unit* target) 
+void Unit::setTargetUnit(Unit* target)
 {
 	if (target == 0) // If we are unsetting the target (moving around)
 	{
 		if (targetUnit != 0) // and we had a target
-			targetUnit->setDistressCall(0);	// Unset the distress call	
+			targetUnit->setDistressCall(0);	// Unset the distress call
 		// TODO: Replace this with a delay?
 	}
 	else target->setDistressCall(this); // Otherwise set the distress call
@@ -278,15 +278,15 @@ Buff* Unit::getBuff(std::string name){
 }
 
 //Prioritize targets
-unsigned int Unit::classifyTarget(Unit* target) 
+unsigned int Unit::classifyTarget(Unit* target)
 {
 	/*
-	Under normal circumstances, a minion’s behavior is simple. Minions follow their attack route until they reach an enemy to engage. 
-	Every few seconds, they will scan the area around them for the highest priority target. When a minion receives a call for help 
-	from an ally, it will evaluate its current target in relation to the target designated by the call. It will switch its attack 
-	to the new target if and only if the new target is of a higher priority than their current target. Minions prioritize targets 
+	Under normal circumstances, a minion’s behavior is simple. Minions follow their attack route until they reach an enemy to engage.
+	Every few seconds, they will scan the area around them for the highest priority target. When a minion receives a call for help
+	from an ally, it will evaluate its current target in relation to the target designated by the call. It will switch its attack
+	to the new target if and only if the new target is of a higher priority than their current target. Minions prioritize targets
 	in the following order:
-	
+
 		1. An enemy champion designated by a call for help from an allied champion. (Enemy champion attacking an Allied champion)
 		2. An enemy minion designated by a call for help from an allied champion. (Enemy minion attacking an Allied champion)
 		3. An enemy minion designated by a call for help from an allied minion. (Enemy minion attacking an Allied minion)
@@ -309,11 +309,11 @@ unsigned int Unit::classifyTarget(Unit* target)
 		else if (dynamic_cast<Champion*>(target) != 0 && dynamic_cast<Minion*>(target->targetUnit) != 0) // Champion attacking minion
 			return 5;
 	}
-	
+
 	Minion* m = dynamic_cast<Minion*>(target);
-	if (m) 
+	if (m)
 	{
-		switch (m->getType()) 
+		switch (m->getType())
 		{
 		case MINION_TYPE_MELEE:
 			return 6;
@@ -325,18 +325,18 @@ unsigned int Unit::classifyTarget(Unit* target)
 		}
 	}
 
-	if (dynamic_cast<Champion*>(target)) 
+	if (dynamic_cast<Champion*>(target))
 		return 9;
 
 	return 10;
 
    /*Turret* t = dynamic_cast<Turret*>(target);
-   
+
    // Turrets before champions
    if (t) {
       return 6;
    }
-   
+
    Minion* m = dynamic_cast<Minion*>(target);
 
    if (m) {

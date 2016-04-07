@@ -81,30 +81,30 @@ SummonersRift::SummonersRift(Game* game) : Map(game, 5*1000000, 30*1000000, 90*1
    mesh.load("LEVELS/Map1/AIPath.aimesh");
    collisionHandler->init(3); // Needs to be initialised after AIMesh
 
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_R_03_A", 10097.62f, 808.73f, 2550, 156, 0));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_R_02_A", 6512.53f, 1262.62f, 2550, 170, 0));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_C_07_A", 3747.26f, 1041.04f, 2550, 190, 0));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_R_03_A", 13459.f, 4284.f, 2550, 156, 1));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_R_02_A", 12920.f, 8005.f, 2550, 170, 1));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_R_01_A", 13205.f, 10474.f, 2550, 190, 1));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_C_05_A", 5448.02f, 6169.10f, 2550, 156, 0));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_C_04_A", 4657.66f, 4591.91f, 2550, 170, 0));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_C_03_A", 3233.99f, 3447.24f, 2550, 190, 0));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_C_01_A", 1341.63f, 2029.98f, 2425, 180, 0));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_C_02_A", 1768.19f, 1589.47f, 2425, 180, 0));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_C_05_A", 8548.f, 8289.f, 2550, 156, 1));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_C_04_A", 9361.f, 9892.f, 2550, 170, 1));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_C_03_A", 10743.f, 11010.f, 2550, 190, 1));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_C_01_A", 12662.f, 12442.f, 2425, 180, 1));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_C_02_A", 12118.f, 12876.f, 2425, 180, 1));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_R_03_A", 10097.62f, 808.73f, 4000, 156, 0));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_R_02_A", 6512.53f, 1262.62f, 4000, 170, 0));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_C_07_A", 3747.26f, 1041.04f, 4000, 190, 0));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_R_03_A", 13459.f, 4284.f, 4000, 156, 1));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_R_02_A", 12920.f, 8005.f, 4000, 170, 1));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_R_01_A", 13205.f, 10474.f, 4000, 190, 1));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_C_05_A", 5448.02f, 6169.10f, 4000, 156, 0));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_C_04_A", 4657.66f, 4591.91f, 4000, 170, 0));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_C_03_A", 3233.99f, 3447.24f, 4000, 190, 0));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_C_01_A", 1341.63f, 2029.98f, 4000, 180, 0));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_C_02_A", 1768.19f, 1589.47f, 4000, 180, 0));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_C_05_A", 8548.f, 8289.f, 4000, 156, 1));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_C_04_A", 9361.f, 9892.f, 4000, 170, 1));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_C_03_A", 10743.f, 11010.f, 4000, 190, 1));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_C_01_A", 12662.f, 12442.f, 4000, 180, 1));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_C_02_A", 12118.f, 12876.f, 4000, 180, 1));
    addObject(new Turret(this, GetNewNetID(), "@Turret_OrderTurretShrine_A", -236.05f, -53.32f, 9999, 999, 0));
    addObject(new Turret(this, GetNewNetID(), "@Turret_ChaosTurretShrine_A", 14157.f, 14456.f, 9999, 999, 1));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_L_03_A", 574.66f, 10220.47f, 2550, 156, 0));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_L_02_A", 1106.26f, 6485.25f, 2550, 170, 0));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_C_06_A", 802.81f, 4052.36f, 2550, 190, 0));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_L_03_A", 3911.f, 13654.f, 2550, 156, 1));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_L_02_A", 7536.f, 13190.f, 2550, 170, 1));
-   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_L_01_A", 10261.f, 13465.f, 2550, 190, 1));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_L_03_A", 574.66f, 10220.47f, 4000, 156, 0));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_L_02_A", 1106.26f, 6485.25f, 4000, 170, 0));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T1_C_06_A", 802.81f, 4052.36f, 4000, 190, 0));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_L_03_A", 3911.f, 13654.f, 4000, 156, 1));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_L_02_A", 7536.f, 13190.f, 4000, 170, 1));
+   addObject(new Turret(this, GetNewNetID(), "@Turret_T2_L_01_A", 10261.f, 13465.f, 4000, 190, 1));
 
    addObject(new LevelProp(this, GetNewNetID(), 12465.f, 14422.257f, 101.f, 0.f, 0.f, 0.f, 0.f, 0.f, "LevelProp_Yonkey", "Yonkey"));
    addObject(new LevelProp(this, GetNewNetID(), -76.f, 1769.1589f, 94.f, 0.f, 0.f, 0.f, 0.f, 0.f, "LevelProp_Yonkey1", "Yonkey"));
@@ -115,6 +115,7 @@ SummonersRift::SummonersRift(Game* game) : Map(game, 5*1000000, 30*1000000, 90*1
    expToLevelUp = { 0, 280, 660, 1140, 1720, 2400, 3180, 4060, 5040, 6120, 7300, 8580, 9960, 11440, 13020, 14700, 16480, 18360 };
 
    // Announcer events
+  // firstSpawnTime = 90 * 1000000;
    announcerEvents.push_back(std::make_pair(false, make_tuple(30 * 1000000, 119, true))); // Welcome to SR
    if (firstSpawnTime - 30 * 1000000 >= 0.0f) announcerEvents.push_back(std::make_pair(false, make_tuple(firstSpawnTime - 30 * 1000000, 120, true))); // 30 seconds until minions spawn
    announcerEvents.push_back(std::make_pair(false, make_tuple(firstSpawnTime, 127, false))); // Minions have spawned (90 * 1000000)

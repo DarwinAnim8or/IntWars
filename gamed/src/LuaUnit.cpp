@@ -17,7 +17,7 @@ void LuaScript::addUnit() {
             "setPosition", &Target::setPosition,
             "isSimpleTarget", &Target::isSimpleTarget);
     lua.set_userdata(targetUserData);
-    
+
     //Because Object is abstract:
     /*sol::constructors <sol::types < Map*, uint32, float, float, uint32>> objCtr;
     sol::userdata <Object> objUserData(
@@ -47,6 +47,7 @@ void LuaScript::addUnit() {
             "Unit", unitCtr, //Unit's constructor, not really useful, but necessary.
             "getStats", &Unit::getStats, //"methodName", &Class::method
             "getMoveSpeed", &Unit::getMoveSpeed,
+            "setMoveSpeed", &Unit::setMoveSpeed,
             "getModel", &Unit::getModel,
             "setModel", &Unit::setModel,
             "getBuffs", &Unit::getBuffs,
@@ -67,10 +68,10 @@ void LuaScript::addUnit() {
             "getX", &Unit::getX, // some Target methods
             "getY", &Unit::getY,
             "getBuff", &Unit::getBuff);
-            
+
     lua.set_userdata(unitUserData); //Add the userData to lua
 
-            
+
     sol::constructors <sol::types < std::string, float, BuffType, Unit*>, sol::types<std::string, float, BuffType, Unit*, Unit*> > buffCtr;
     sol::userdata <Buff> buffUserData(// this is the actual user data.
             "Buff", buffCtr, //Unit's constructor, not really useful, but necessary.
@@ -78,7 +79,7 @@ void LuaScript::addUnit() {
             "setMovementSpeedPercentModifier", &Buff::setMovementSpeedPercentModifier
             );//"methodName", &Class::method);
     lua.set_userdata(buffUserData); //Add the userData to lua
-    
+
     //Setting lua values:
     lua.set("DAMAGE_TYPE_PHYSICAL", DAMAGE_TYPE_PHYSICAL);
     lua.set("DAMAGE_TYPE_MAGICAL", DAMAGE_TYPE_MAGICAL);

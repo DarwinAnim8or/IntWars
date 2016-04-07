@@ -33,7 +33,7 @@ enum MoveOrder {
    MOVE_ORDER_ATTACKMOVE
 };
 
-class Unit : public Object 
+class Unit : public Object
 {
 public:
 	Unit(Map* map, uint32 id, std::string model, Stats* stats, uint32 collisionRadius = 40, float x = 0, float y = 0, uint32 visionRadius = 0) : Object(map, id, x, y, collisionRadius, visionRadius), stats(stats),
@@ -46,6 +46,7 @@ public:
 	Stats& getStats() { return *stats; }
 	virtual void update(int64 diff) override;
 	virtual float getMoveSpeed() const { return stats->getMovementSpeed(); }
+	virtual void setMoveSpeed(float speed) const { stats->setMovementSpeed(speed); }
 	int getKillDeathCounter() { return killDeathCounter; }
 
 	std::vector<Buff*> buffs;
@@ -102,21 +103,21 @@ protected:
    uint64 statUpdateTimer;
    uint32 autoAttackProjId;
    MoveOrder moveOrder;
-   
+
    /**
     * Unit we want to attack as soon as in range
     */
    Unit* targetUnit;
    Unit* autoAttackTarget;
-   
+
    bool deathFlag;
-   
+
    std::string model;
-   
+
    bool targetable;
    bool nextAutoIsCrit;
    LuaScript unitScript = LuaScript(true);
-   
+
    int killDeathCounter;
 };
 

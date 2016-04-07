@@ -7,8 +7,8 @@
 
 void Buff::update(int64 diff){
    timeElapsed += (float)diff/1000000.0f;
-   
-   
+
+
       if(buffScript != 0 && buffScript->isLoaded()){
       buffScript->lua.get <sol::function> ("onUpdate").call <void> (diff);
    }else{
@@ -29,17 +29,17 @@ Buff::Buff(std::string buffName, float dur, BuffType type, Unit* u, Unit* uu)  :
    std::string scriptloc = "../../lua/buffs/" + name + ".lua";
 	CORE_INFO("Loading %s", scriptloc.c_str());
    try{
-   
+
     buffScript = new LuaScript(true);//fix
-    
+
     buffScript->loadScript(scriptloc);
     buffScript->setLoaded(true);
-    
+
     CORE_INFO("Loaded buff lua script");
-    buffScript->lua.set_function("getAttachedUnit", [this]() { 
+    buffScript->lua.set_function("getAttachedUnit", [this]() {
       return attachedTo;
    });
-   
+
    buffScript->lua.set_function("dealMagicDamage", [this](Unit* target, float amount) { attacker->dealDamageTo(target,amount,DAMAGE_TYPE_MAGICAL,DAMAGE_SOURCE_SPELL); });
 
     CORE_INFO("added lua buff script functions");
@@ -47,9 +47,10 @@ Buff::Buff(std::string buffName, float dur, BuffType type, Unit* u, Unit* uu)  :
       buffScript->setLoaded(false);
       CORE_ERROR("Lua buff load error: %s", e.what());
    }
-   
-   
+
+
       attachedTo->getMap()->getGame()->notifyAddBuff(attachedTo, attacker, name);
+      //attachedTo->addBuff(this);
    }
 }
 

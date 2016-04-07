@@ -15,20 +15,20 @@ Minion::Minion(Map* map, uint32 id, MinionSpawnType type, MinionSpawnPosition po
 	setPosition(spawnSpecifics.second.X, spawnSpecifics.second.Y);
 
 	map->setMinionStats(this); // Let the map decide how strong this minion has to be.
-   
+
    std::string minionModel;
 	if (spawnSpecifics.first==0) // If we're the blue side
 		minionModel += "Blue_Minion_"; // make it a blue minion
 	else minionModel += "Red_Minion_"; // otherwise make it a red minion
-   
+
 	// Finish model name with type
    if (type == MINION_TYPE_MELEE) minionModel += "Basic";
-   else if (type == MINION_TYPE_CASTER)  minionModel += "Wizard"; 
+   else if (type == MINION_TYPE_CASTER)  minionModel += "Wizard";
    else minionModel += "MechCannon";
 
 	// Set model
    setModel(minionModel);
-   
+
 
 	if (mainWaypoints.size() > 0)										// If we have lane path instructions from the map
 		setWaypoints({ mainWaypoints[0], mainWaypoints[0] }); // Follow these instructions
@@ -37,7 +37,7 @@ Minion::Minion(Map* map, uint32 id, MinionSpawnType type, MinionSpawnPosition po
    setMoveOrder(MOVE_ORDER_ATTACKMOVE);
 }
 
-void Minion::update(int64 diff) 
+void Minion::update(int64 diff)
 {
 	Unit::update(diff);
 
@@ -97,12 +97,13 @@ void Minion::keepFocussingTarget()
 }
 
 void Minion::walkToDestination()
-{ 
+{
 	if ((waypoints.size() == 1) || (curWaypoint == 2 && ++curMainWaypoint < mainWaypoints.size()))
 	{
 		//CORE_INFO("Minion reached a point! Going to %f; %f", mainWaypoints[curMainWaypoint].X, mainWaypoints[curMainWaypoint].Y);
 		vector<Vector2> newWaypoints = { Vector2(x, y), mainWaypoints[curMainWaypoint] };
 		setWaypoints(newWaypoints);
+		map->getGame()->notifyMovement(this);
    }
 }
 
@@ -110,7 +111,7 @@ void Minion::onCollision(Object * a_Collider)
 {
 	if (a_Collider == targetUnit) // If we're colliding with the target, don't do anything.
 		return;
-	
+
 	if (targetUnit != 0)
 	{
 		// Thread this?
